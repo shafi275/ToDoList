@@ -28,8 +28,8 @@
     </ul>
 
     <!-- Right Side Search -->
-    <form class="d-flex" role="search">
-      <input class="form-control me-2" type="search" placeholder="Search tasks..." aria-label="Search">
+    <form class="d-flex" role="search" method="get" action="/tasks">
+      <input class="form-control me-2" type="search" name="q" placeholder="Search tasks..." aria-label="Search" value="{{ query|default:'' }}">
       <button class="btn btn-outline-primary" type="submit">Search</button>
     </form>
   </div>
@@ -38,6 +38,13 @@
 <!-- Tasks Table Section -->
 <div class="container mt-5">
   <h3 class="text-center mb-4">Here is the list of your tasks</h3>
+  
+  <!-- No tasks message -->
+  {% if tasks|length == 0 %}
+    <div class="alert alert-warning" role="alert">
+      No tasks found for the search term "{{ query }}".
+    </div>
+  {% endif %}
   
   <div class="table-responsive">
     <table class="table table-bordered table-striped table-hover align-middle">
@@ -50,16 +57,14 @@
         </tr>
       </thead>
       <tbody>
-        {% for task in tasks%}
+        {% for task in tasks %}
         <tr>
-          <th scope="row">{{forloop.counter}}</th>
-          <td>{{task.tasktitle}}</td>
-          <td>{{task.taskdesc}}</td>
-          <td>{{task.time}}</td>
+          <th scope="row">{{ forloop.counter }}</th>
+          <td>{{ task.tasktitle }}</td>
+          <td>{{ task.taskdesc }}</td>
+          <td>{{ task.time }}</td>
         </tr>
         {% endfor %}
-        <tr>
-          
       </tbody>
     </table>
   </div>
