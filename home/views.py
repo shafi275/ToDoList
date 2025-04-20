@@ -15,8 +15,17 @@ def home(request):
         # Task.objects.create(name=taskName, description=taskDesc)
     return render(request, 'index.html')
 
+from django.db.models import Q
+
 def tasks(request):
-    alltasks= Task.objects.all()
-    context={'tasks':alltasks}
-    print(alltasks)
+    query = request.GET.get('q')
+    if query:
+        alltasks = Task.objects.filter(
+            Q(tasktitle__icontains=query) | Q(taskdesc__icontains=query)
+        )
+    else:
+        alltasks = Task.objects.all()
+    
+    context = {'tasks': alltasks, 'query': query}
     return render(request, 'tasks.html', context)
+
