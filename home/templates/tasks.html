@@ -46,14 +46,18 @@
           <th scope="col">#</th>
           <th scope="col">Task Name</th>
           <th scope="col">Task Description</th>
+          <th scope="col">Created At</th>
         </tr>
       </thead>
       <tbody>
+        {% for task in tasks%}
         <tr>
-          <th scope="row">1</th>
-          <td>Study Bootstrap</td>
-          <td>Learn how to create responsive UI using Bootstrap 5 components.</td>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{task.tasktitle}}</td>
+          <td>{{task.taskdesc}}</td>
+          <td>{{task.time}}</td>
         </tr>
+        {% endfor %}
         <tr>
           
       </tbody>
